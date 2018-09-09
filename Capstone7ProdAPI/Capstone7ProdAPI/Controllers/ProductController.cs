@@ -10,11 +10,13 @@ using Capstone7ProdAPI.Models;
 
 namespace Capstone7ProdAPI.Controllers
 {
+    //created new Class "Products"
     public class Products
     {
         public int ProductID {set; get;}
         public string ProductName {set; get;}
     }
+    //return all products
     public class ProductController : ApiController
     {
         public List<Product> GetAllProducts()
@@ -28,15 +30,34 @@ namespace Capstone7ProdAPI.Controllers
             return listOfProducts;
         }
 
+        //return product by ID input
         [HttpGet]
-        public Product GetProductByID(int ProductID)
+        public List<Product> GetProductByID(int ProductID)
         {
-            //URL..../api/Product/GetProductById?ProductID=7
+            //URL..../api/Product/GetProductByID?ProductID=7
             //ORM
             northwindEntities ORM = new northwindEntities();
 
             // filter Products by ID
-            return ORM.Products.Find(ProductID);
+            List<Product> listByProdID = ORM.Products.Where(x => x.ProductID == ProductID).ToList();
+
+            return listByProdID;
+        }
+        
+        //return product info by ID and name
+        [HttpGet]
+        public List<Product> GetProductByNameID(int ProductID, string ProductName)
+        {
+            //URL....
+            //ORM
+            northwindEntities ORM = new northwindEntities();
+
+            List<Product> prodList = ORM.Products.ToList();
+
+            return ORM.Products.Where(x => x.ProductID < 0 && ProductName != null).ToList();
+
+           
+
         }
     }
 }
