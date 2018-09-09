@@ -29,16 +29,14 @@ namespace Capstone7ProdAPI.Controllers
         }
 
         [HttpGet]
-        public List<Product> GetProductInfo(int ProductID)
+        public Product GetProductByID(int ProductID)
         {
-            //URL....
+            //URL..../api/Product/GetProductById?ProductID=7
             //ORM
             northwindEntities ORM = new northwindEntities();
 
-            List<Product> listOfProducts = ORM.Products.Select(x => new Product
-            { ProductID = x.ProductID, ProductName = x.ProductName }).ToList();
- 
-            return listOfProducts;
+            // filter Products by ID
+            return ORM.Products.Find(ProductID);
         }
     }
 }
